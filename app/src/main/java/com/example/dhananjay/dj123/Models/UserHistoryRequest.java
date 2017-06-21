@@ -26,4 +26,6 @@ public class UserHistoryRequest {
     public void setDate(String date) {
         this.date = date;
     }
+
+
 }

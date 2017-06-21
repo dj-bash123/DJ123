@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("ec2-52-54-173-224.compute-1.amazonaws.com:7200/api/snapQA/users/dealsHistory")
+                .baseUrl("http://ec2-52-54-173-224.compute-1.amazonaws.com:7000/api/chat/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String token = sharedPreferences.getString(Key, "notPresent");
+        String date = sharedPreferences.getString(Key, "notPresent");
 
         UserHistoryRequest userHistoryRequest = new UserHistoryRequest();
         userHistoryRequest.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwiZ2V0dGVycyI6e30sIl9pZCI6bnVsbCwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiUGFzc3dvcmQiOiJyZXF1aXJlIiwiRW1haWwiOiJyZXF1aXJlIiwiUGhvbmUiOiJyZXF1aXJlIiwiTmFtZSI6Im1vZGlmeSIsIlBvaW50cyI6ImRlZmF1bHQiLCJyYXRpbmciOiJkZWZhdWx0IiwiU3BlY2lhbGl6YXRpb24iOiJkZWZhdWx0IiwiaXNQaG9uZVZlcmlmaWVkIjoiZGVmYXVsdCIsImNyZWF0ZWRBdCI6ImRlZmF1bHQiLCJsYXN0TG9naW4iOiJkZWZhdWx0IiwibW9kaWZpZWRBdCI6ImRlZmF1bHQiLCJfaWQiOiJtb2RpZnkifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnsiUG9pbnRzIjp0cnVlLCJyYXRpbmciOnRydWUsIlNwZWNpYWxpemF0aW9uIjp0cnVlLCJpc1Bob25lVmVyaWZpZWQiOnRydWUsImNyZWF0ZWRBdCI6dHJ1ZSwibGFzdExvZ2luIjp0cnVlLCJtb2RpZmllZEF0Ijp0cnVlfSwiaW5pdCI6e30sIm1vZGlmeSI6eyJfaWQiOnRydWUsIk5hbWUiOnRydWV9LCJyZXF1aXJlIjp7IlBhc3N3b3JkIjp0cnVlLCJFbWFpbCI6dHJ1ZSwiUGhvbmUiOnRydWV9fSwic3RhdGVOYW1lcyI6WyJyZXF1aXJlIiwibW9kaWZ5IiwiaW5pdCIsImRlZmF1bHQiLCJpZ25vcmUiXX0sImVtaXR0ZXIiOnsiZG9tYWluIjpudWxsLCJfZXZlbnRzIjp7fSwiX2V2ZW50c0NvdW50IjowLCJfbWF4TGlzdGVuZXJzIjowfX0sImlzTmV3Ijp0cnVlLCJfZG9jIjp7IlBvaW50cyI6MCwicmF0aW5nIjowLCJTcGVjaWFsaXphdGlvbiI6W10sImJhbmtEZXRhaWxzIjp7fSwiaXNQaG9uZVZlcmlmaWVkIjpmYWxzZSwiY3JlYXRlZEF0IjoiMjAxNy0wNS0yMFQwNjowODo0NC44MDdaIiwibGFzdExvZ2luIjoiMjAxNy0wNS0yMFQwNjowODo0NC44MDdaIiwibW9kaWZpZWRBdCI6IjIwMTctMDUtMjBUMDY6MDg6NDQuODA3WiIsIl9pZCI6IjU5MWZkZTk4OGFiN2M4NjMwZGEzMmI5MyIsIk5hbWUiOiJQcmFkZWVwIFNpbmdoIn0sImlhdCI6MTQ5NTI2MDgyNCwiZXhwIjoxNTAwNDQ0ODI0fQ.JazFYl7EyocJR_hHW-1Ax496HGxPAURq6c_pbIoUgR0");
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<UserHistoryResponses> call, Response<UserHistoryResponses> response) {
                 userHistoryResponses = response.body();
                 progressDialog.dismiss();
-                //Log.d("New deal resp:  ", "" + newDealResponses.getResponses().get(2).getAdminName());
+                //Log.d("New deal resp:  ", "" + userHistoryResponses.getResponses().get(2).getDealsId());
 
                 if(userHistoryResponses.getResponses().isEmpty()){
 
