@@ -17,7 +17,7 @@ import java.util.List;
 
 public class UserHistoryRecyclerViewAdapter extends RecyclerView.Adapter<UserHistoryRecyclerViewAdapter.MyViewHolder> {
 
-    private List<UserHistoryFragmentResponse> historyList;
+    private List<UserHistoryFragmentResponse> historyList1;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView status, dealsId, createdAt;
@@ -31,8 +31,8 @@ public class UserHistoryRecyclerViewAdapter extends RecyclerView.Adapter<UserHis
     }
 
 
-    public UserHistoryRecyclerViewAdapter(List<UserHistoryFragmentResponse> historyList) {
-        this.historyList = historyList;
+    public UserHistoryRecyclerViewAdapter(List<UserHistoryFragmentResponse> historyList1) {
+        this.historyList1 = historyList1;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class UserHistoryRecyclerViewAdapter extends RecyclerView.Adapter<UserHis
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        UserHistoryFragmentResponse userHistoryFragmentResponse = historyList.get(position);
+        UserHistoryFragmentResponse userHistoryFragmentResponse = historyList1.get(position);
         holder.status.setText(userHistoryFragmentResponse.getStatus());
         holder.dealsId.setText(userHistoryFragmentResponse.getDealsId());
         holder.createdAt.setText((CharSequence) userHistoryFragmentResponse.getCreatedAt());
@@ -53,6 +53,8 @@ public class UserHistoryRecyclerViewAdapter extends RecyclerView.Adapter<UserHis
 
     @Override
     public int getItemCount() {
-        return historyList.size();
+
+        return historyList1.size();
+
     }
 }

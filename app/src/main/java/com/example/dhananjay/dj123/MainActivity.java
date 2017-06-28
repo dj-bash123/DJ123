@@ -43,15 +43,18 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
-    RecyclerView userHistoryRecyclerView;
+
+    private RecyclerView userHistoryRecyclerView;
     RecyclerView.LayoutManager layoutManager;
     UserHistoryResponses userHistoryResponses;
     public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String Key = "key";
     private List<UserHistoryFragmentResponse> historyList = new ArrayList<>();
-    UserHistoryRecyclerViewAdapter userHistoryRecyclerViewAdapter;
+    private UserHistoryRecyclerViewAdapter userHistoryRecyclerViewAdapter;
     ProgressDialog progressDialog;
     TextView tv;
+
+
 
     public MainActivity() {
         // Required empty public constructor
@@ -69,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 .build()
         );
 
-        userHistoryRecyclerView = (RecyclerView) findViewById(R.id.user_history_rv);
+        userHistoryRecyclerView = (RecyclerView) findViewById(R.id.user_history_rv1);
+
 
         tv = (TextView) findViewById(R.id.user_history_fragment_rv_tv);
         tv.setVisibility(View.GONE);
@@ -81,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ec2-52-54-173-224.compute-1.amazonaws.com:7000/api/chat/")
+                .baseUrl("http://ec2-52-54-173-224.compute-1.amazonaws.com:7200/api/snapQA/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -100,24 +104,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserHistoryResponses> call, Response<UserHistoryResponses> response) {
                 userHistoryResponses = response.body();
+                Log.d("TAG", "user response :" + userHistoryResponses.getResponse().get(0).get_id());
                 progressDialog.dismiss();
                 //Log.d("New deal resp:  ", "" + userHistoryResponses.getResponses().get(2).getDealsId());
 
-                if(userHistoryResponses.getResponses().isEmpty()){
 
-                }else {
 
+                if (userHistoryResponses.getResponse().isEmpty()) {
+
+                } else {
                     userHistoryRecyclerViewAdapter = new UserHistoryRecyclerViewAdapter(historyList);
                     layoutManager = new LinearLayoutManager(getApplicationContext());
                     userHistoryRecyclerView.setLayoutManager(layoutManager);
+                    userHistoryRecyclerView.setHasFixedSize(true);
                     userHistoryRecyclerView.setAdapter(userHistoryRecyclerViewAdapter);
 
                 }
+
             }
+
 
             @Override
             public void onFailure(Call<UserHistoryResponses> call, Throwable t) {
                 progressDialog.dismiss();
+                Log.d("TAG", "response failure" + t.getMessage());
                 tv.setVisibility(View.VISIBLE);
             }
         });

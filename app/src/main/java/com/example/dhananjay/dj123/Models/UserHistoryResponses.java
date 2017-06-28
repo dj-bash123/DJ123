@@ -11,19 +11,19 @@ import java.util.List;
 
 public class UserHistoryResponses {
 
-    @SerializedName("responses")
+    @SerializedName("response")
     @Expose
-    List<UserHistoryFragmentResponse> responses;
+    List<UserHistoryFragmentResponse> response;
 
-    public UserHistoryResponses(List<UserHistoryFragmentResponse> responses) {
-        this.responses = responses;
+    public UserHistoryResponses(List<UserHistoryFragmentResponse> response) {
+        this.response = response;
     }
 
-    public List<UserHistoryFragmentResponse> getResponses() {
-        return responses;
+    public List<UserHistoryFragmentResponse> getResponse() {
+        return response;
     }
 
-    public void setResponses(List<UserHistoryFragmentResponse> responses) {
-        this.responses = responses;
+    public void setResponse(List<UserHistoryFragmentResponse> response) {
+        this.response = response;
     }
 }
