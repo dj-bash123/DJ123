@@ -44,27 +44,31 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-    private RecyclerView userHistoryRecyclerView;
+    RecyclerView userHistoryRecyclerView;
+
     RecyclerView.LayoutManager layoutManager;
     UserHistoryResponses userHistoryResponses;
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    public static final String Key = "key";
-    private List<UserHistoryFragmentResponse> historyList = new ArrayList<>();
-    private UserHistoryRecyclerViewAdapter userHistoryRecyclerViewAdapter;
+    //public static final String MyPREFERENCES = "MyPrefs" ;
+    //public static final String Key = "key";
+    //private List<UserHistoryFragmentResponse> historyList = new ArrayList<>();
+    UserHistoryRecyclerViewAdapter userHistoryRecyclerViewAdapter;
     ProgressDialog progressDialog;
     TextView tv;
 
 
 
-    public MainActivity() {
-        // Required empty public constructor
-    }
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
+
+        //userHistoryRecyclerView = (RecyclerView) findViewById(R.id.user_history_rv1);
+
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/opensanslight.ttf")
@@ -91,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
         final API service = retrofit.create(API.class);
 
-        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString(Key, "notPresent");
-        String date = sharedPreferences.getString(Key, "notPresent");
+        //sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        //String token = sharedPreferences.getString(Key, "notPresent");
+        //String date = sharedPreferences.getString(Key, "notPresent");
 
         UserHistoryRequest userHistoryRequest = new UserHistoryRequest();
         userHistoryRequest.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwiZ2V0dGVycyI6e30sIl9pZCI6bnVsbCwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiUGFzc3dvcmQiOiJyZXF1aXJlIiwiRW1haWwiOiJyZXF1aXJlIiwiUGhvbmUiOiJyZXF1aXJlIiwiTmFtZSI6Im1vZGlmeSIsIlBvaW50cyI6ImRlZmF1bHQiLCJyYXRpbmciOiJkZWZhdWx0IiwiU3BlY2lhbGl6YXRpb24iOiJkZWZhdWx0IiwiaXNQaG9uZVZlcmlmaWVkIjoiZGVmYXVsdCIsImNyZWF0ZWRBdCI6ImRlZmF1bHQiLCJsYXN0TG9naW4iOiJkZWZhdWx0IiwibW9kaWZpZWRBdCI6ImRlZmF1bHQiLCJfaWQiOiJtb2RpZnkifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnsiUG9pbnRzIjp0cnVlLCJyYXRpbmciOnRydWUsIlNwZWNpYWxpemF0aW9uIjp0cnVlLCJpc1Bob25lVmVyaWZpZWQiOnRydWUsImNyZWF0ZWRBdCI6dHJ1ZSwibGFzdExvZ2luIjp0cnVlLCJtb2RpZmllZEF0Ijp0cnVlfSwiaW5pdCI6e30sIm1vZGlmeSI6eyJfaWQiOnRydWUsIk5hbWUiOnRydWV9LCJyZXF1aXJlIjp7IlBhc3N3b3JkIjp0cnVlLCJFbWFpbCI6dHJ1ZSwiUGhvbmUiOnRydWV9fSwic3RhdGVOYW1lcyI6WyJyZXF1aXJlIiwibW9kaWZ5IiwiaW5pdCIsImRlZmF1bHQiLCJpZ25vcmUiXX0sImVtaXR0ZXIiOnsiZG9tYWluIjpudWxsLCJfZXZlbnRzIjp7fSwiX2V2ZW50c0NvdW50IjowLCJfbWF4TGlzdGVuZXJzIjowfX0sImlzTmV3Ijp0cnVlLCJfZG9jIjp7IlBvaW50cyI6MCwicmF0aW5nIjowLCJTcGVjaWFsaXphdGlvbiI6W10sImJhbmtEZXRhaWxzIjp7fSwiaXNQaG9uZVZlcmlmaWVkIjpmYWxzZSwiY3JlYXRlZEF0IjoiMjAxNy0wNS0yMFQwNjowODo0NC44MDdaIiwibGFzdExvZ2luIjoiMjAxNy0wNS0yMFQwNjowODo0NC44MDdaIiwibW9kaWZpZWRBdCI6IjIwMTctMDUtMjBUMDY6MDg6NDQuODA3WiIsIl9pZCI6IjU5MWZkZTk4OGFiN2M4NjMwZGEzMmI5MyIsIk5hbWUiOiJQcmFkZWVwIFNpbmdoIn0sImlhdCI6MTQ5NTI2MDgyNCwiZXhwIjoxNTAwNDQ0ODI0fQ.JazFYl7EyocJR_hHW-1Ax496HGxPAURq6c_pbIoUgR0");
@@ -113,11 +117,12 @@ public class MainActivity extends AppCompatActivity {
                 if (userHistoryResponses.getResponse().isEmpty()) {
 
                 } else {
-                    userHistoryRecyclerViewAdapter = new UserHistoryRecyclerViewAdapter(historyList);
-                    layoutManager = new LinearLayoutManager(getApplicationContext());
-                    userHistoryRecyclerView.setLayoutManager(layoutManager);
-                    userHistoryRecyclerView.setHasFixedSize(true);
-                    userHistoryRecyclerView.setAdapter(userHistoryRecyclerViewAdapter);
+
+                        userHistoryRecyclerViewAdapter = new UserHistoryRecyclerViewAdapter(userHistoryResponses);
+                        layoutManager = new LinearLayoutManager(MainActivity.this);
+                        userHistoryRecyclerView.setLayoutManager(layoutManager);
+                        userHistoryRecyclerView.setAdapter(userHistoryRecyclerViewAdapter);
+
 
                 }
 

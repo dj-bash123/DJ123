@@ -1,60 +1,77 @@
 package com.example.dhananjay.dj123.Adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.dhananjay.dj123.Models.UserHistoryFragmentResponse;
+import com.example.dhananjay.dj123.Models.UserHistoryResponses;
 import com.example.dhananjay.dj123.R;
 
-import java.util.List;
+
+
 
 /**
- * Created by dhananjay on 12-06-2017.
+ * Created by OLA on 28/03/17.
  */
 
 public class UserHistoryRecyclerViewAdapter extends RecyclerView.Adapter<UserHistoryRecyclerViewAdapter.MyViewHolder> {
 
-    private List<UserHistoryFragmentResponse> historyList1;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView status, dealsId, createdAt;
+    UserHistoryResponses userHistoryResponsess;
 
-        public MyViewHolder(View view) {
-            super(view);
-            status = (TextView) view.findViewById(R.id.tutor_profile_phone_number1);
-            dealsId = (TextView) view.findViewById(R.id.tutor_profile_phone_number2);
-            createdAt = (TextView) view.findViewById(R.id.tutor_profile_phone_number);
-        }
-    }
-
-
-    public UserHistoryRecyclerViewAdapter(List<UserHistoryFragmentResponse> historyList1) {
-        this.historyList1 = historyList1;
+    public UserHistoryRecyclerViewAdapter(UserHistoryResponses userHistoryResponses){
+        userHistoryResponsess = userHistoryResponses;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.user_history_rv, parent, false);
 
-        return new MyViewHolder(itemView);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_history_rv, parent, false);
+
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        UserHistoryFragmentResponse userHistoryFragmentResponse = historyList1.get(position);
-        holder.status.setText(userHistoryFragmentResponse.getStatus());
-        holder.dealsId.setText(userHistoryFragmentResponse.getDealsId());
-        holder.createdAt.setText((CharSequence) userHistoryFragmentResponse.getCreatedAt());
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
+
+        holder.status.setText(userHistoryResponsess.getResponse().get(position).getStatus());
+
+        holder.dealsid.setText(userHistoryResponsess.getResponse().get(position).getDealsId());
+
+        holder.createdat.setText(userHistoryResponsess.getResponse().get(position).getCreatedAt());
+
+        Log.d("jkhdjksahda  ","" + userHistoryResponsess.getResponse().get(position).getCreatedAt() );
+
+        holder.linearLayout.setVisibility(LinearLayout.VISIBLE);
+
+        final LinearLayout layout = holder.linearLayout;
     }
 
     @Override
     public int getItemCount() {
+        if(userHistoryResponsess != null) {
+            return userHistoryResponsess.getResponse().size();
+        }else {
+            return 0;
+        }
+    }
 
-        return historyList1.size();
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
+        TextView status, dealsid, createdat;
+        LinearLayout linearLayout;
+
+        public MyViewHolder(final View itemView) {
+            super(itemView);
+
+            status = (TextView) itemView.findViewById(R.id.tutor_profile_phone_number);
+            dealsid = (TextView) itemView.findViewById(R.id.tutor_profile_phone_number2);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.id1);
+            createdat = (TextView) itemView.findViewById(R.id.tutor_profile_phone_number1);
+        }
     }
 }

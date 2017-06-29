@@ -25,9 +25,9 @@ public class UserHistoryFragmentResponse {
 
     @SerializedName("createdAt")
     @Expose
-    Date createdAt;
+    String createdAt;
 
-    public UserHistoryFragmentResponse(String _id, String status, String dealsId, Date createdAt) {
+    public UserHistoryFragmentResponse(String _id, String status, String dealsId, String createdAt) {
         this._id = _id;
         this.status = status;
         this.dealsId = dealsId;
@@ -58,11 +58,11 @@ public class UserHistoryFragmentResponse {
         this.dealsId = dealsId;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 }
